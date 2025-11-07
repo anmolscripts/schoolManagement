@@ -1,5 +1,8 @@
 import Signin from "@/components/Auth/Signin";
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
+import ColorBends from "@/components/ui/ColorBends";
+import Prism from "@/components/ui/Prism";
+import PrismaticBurst from "@/components/ui/prismaticBurst";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
@@ -10,11 +13,22 @@ export const metadata: Metadata = {
 };
 
 export default function SignIn() {
-  
   return (
     <>
       <Breadcrumb pageName="Sign In" />
-
+      <div style={{ width: '100%', height: '600px', position: 'relative', backgroundColor: '#000' }}>
+  <Prism
+    animationType="rotate"
+    timeScale={0.5}
+    height={3.5}
+    baseWidth={5.5}
+    scale={3.6}
+    hueShift={0}
+    colorFrequency={1}
+    noise={0.5}
+    glow={1}
+  />
+</div>
       <div className="rounded-[10px] bg-white shadow-1 dark:bg-gray-dark dark:shadow-card">
         <div className="flex flex-wrap items-center">
           <div className="w-full xl:w-1/2">
