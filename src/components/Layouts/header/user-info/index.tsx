@@ -11,6 +11,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { LogOutIcon, SettingsIcon, UserIcon } from "./icons";
+import { redirect } from "next/navigation";
 
 export function UserInfo() {
   const [isOpen, setIsOpen] = useState(false);
@@ -20,7 +21,21 @@ export function UserInfo() {
     email: "johnson@nextadmin.com",
     img: "/images/user/user-03.png",
   };
-
+const handelLogoutClick = async () => {
+  setIsOpen(false);
+  const request = new Request("http://localhost:3000/api/logout", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      // You can remove this code block
+      const response = await fetch(request);
+      console.log(response.status);
+      if (response.status === 200) {
+        redirect("/auth/signin");
+      }
+}
   return (
     <Dropdown isOpen={isOpen} setIsOpen={setIsOpen}>
       <DropdownTrigger className="rounded align-middle outline-none ring-primary ring-offset-2 focus-visible:ring-1 dark:ring-offset-gray-dark">
@@ -104,9 +119,9 @@ export function UserInfo() {
         <hr className="border-[#E8E8E8] dark:border-dark-3" />
 
         <div className="p-2 text-base text-[#4B5563] dark:text-dark-6">
-          <button
+          <button 
             className="flex w-full items-center gap-2.5 rounded-lg px-2.5 py-[9px] hover:bg-gray-2 hover:text-dark dark:hover:bg-dark-3 dark:hover:text-white"
-            onClick={() => setIsOpen(false)}
+            onClick={handelLogoutClick}
           >
             <LogOutIcon />
 

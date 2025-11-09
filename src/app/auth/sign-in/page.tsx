@@ -1,12 +1,9 @@
 import Signin from "@/components/Auth/Signin";
-import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
-import ColorBends from "@/components/ui/ColorBends";
+
 import Prism from "@/components/ui/Prism";
-import PrismaticBurst from "@/components/ui/prismaticBurst";
+
 import type { Metadata } from "next";
-import Image from "next/image";
-import Link from "next/link";
-import { useState } from "react";
+
 
 export const metadata: Metadata = {
   title: "Sign in",
@@ -38,7 +35,7 @@ export default function SignIn() {
           </div>
         </div>
         <div className="container mx-auto grid place-items-center h-full">
-          <div className="bg-white z-9 w-1/3 p-5 rounded-3xl">
+          <div className="bg-white-glass glass z-9 w-1/3 p-5 rounded-3xl shadow-dark shadow-lg">
             <Signin />
           </div>
         </div>

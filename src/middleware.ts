@@ -3,20 +3,30 @@ import type { NextRequest } from "next/server";
 
 export function middleware(req: NextRequest) {
   const token = req.cookies.get("token")?.value;
-  const url = req.nextUrl;
+  const { pathname } = req.nextUrl;
 
-  // If user is not logged in & tries to access dashboard
-  if (!token && url.pathname.startsWith("/dashboard")) {
+  // Routes that do NOT require auth (whitelist)
+  const publicPaths = [
+    "/auth/sign-in",
+    "/auth/sign-up",
+    "/api/login",
+    "/favicon.ico",
+  ];
+
+  // If route starts with any of the public paths → allow
+  const isPublic = publicPaths.some((path) => pathname.startsWith(path));
+
+  // If user not logged in and route is NOT public → redirect
+  if (!token && !isPublic) {
     return NextResponse.redirect(new URL("/auth/sign-in", req.url));
   }
 
   return NextResponse.next();
 }
 
-// ✅ MUST match both /dashboard and nested routes
+// ✅ Apply middleware to all routes except Next.js internal files
 export const config = {
   matcher: [
-    "/dashboard",        // root dashboard route
-    "/dashboard/:path*", // any nested dashboard route
+    "/((?!_next|images|static|favicon.ico).*)",
   ],
 };

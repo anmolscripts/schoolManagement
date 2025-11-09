@@ -4,10 +4,11 @@ import Link from "next/link";
 import React, { useState } from "react";
 import InputGroup from "../FormElements/InputGroup";
 import { Checkbox } from "../FormElements/checkbox";
+import { redirect } from "next/navigation";
 
 export default function SigninWithPassword() {
   const [data, setData] = useState({
-    email: process.env.NEXT_PUBLIC_DEMO_USER_MAIL || "",
+    userName: process.env.NEXT_PUBLIC_DEMO_USER_MAIL || "",
     password: process.env.NEXT_PUBLIC_DEMO_USER_PASS || "",
     remember: false,
   });
@@ -21,12 +22,23 @@ export default function SigninWithPassword() {
     });
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    // You can remove this code block
+    console.log("Data => ", data);
     setLoading(true);
-
+    const request = new Request("http://localhost:3000/api/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+    // You can remove this code block
+    const response = await fetch(request);
+    console.log(response.status);
+    if (response.status === 200) {
+      redirect("/dashboard");
+    }
     setTimeout(() => {
       setLoading(false);
     }, 1000);
@@ -35,13 +47,25 @@ export default function SigninWithPassword() {
   return (
     <form onSubmit={handleSubmit}>
       <InputGroup
-        type="email"
-        label="Email"
+        type="text"
+        label="School Code"
+        className="mb-4 [&_input]:py-[15px]"
+        placeholder="Enter your School Code"
+        name="userName"
+        handleChange={handleChange}
+        value={data.userName}
+        inputClass="bg-dark text-white"
+        icon={<EmailIcon />}
+      />
+      <InputGroup
+        type="text"
+        label="User Name"
         className="mb-4 [&_input]:py-[15px]"
         placeholder="Enter your email"
-        name="email"
+        name="userName"
         handleChange={handleChange}
-        value={data.email}
+        value={data.userName}
+        inputClass="bg-dark text-white"
         icon={<EmailIcon />}
       />
 
@@ -53,6 +77,7 @@ export default function SigninWithPassword() {
         name="password"
         handleChange={handleChange}
         value={data.password}
+        inputClass="bg-dark text-white"
         icon={<PasswordIcon />}
       />
 

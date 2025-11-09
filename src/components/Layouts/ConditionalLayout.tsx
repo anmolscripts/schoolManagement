@@ -15,9 +15,10 @@ export default function ConditionalLayout({ children }: PropsWithChildren) {
     return (
         <>
             <Sidebar />
-            <div className="w-full bg-gray-2 dark:bg-[#020d1a]">
+            <div className="w-full bg-gray-2 dark:bg-[#020d1a] relative">
                 <Header />
-                <main className="isolate mx-auto w-full max-w-screen-2xl overflow-hidden p-4 md:p-6 2xl:p-10">
+                <main className="isolate mx-auto w-full overflow-hidden px-5 m-5">
+                    
                     {children}
                 </main>
             </div>
