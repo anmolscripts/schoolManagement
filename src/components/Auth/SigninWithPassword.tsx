@@ -28,7 +28,7 @@ export default function SigninWithPassword() {
     e.preventDefault();
     console.log("Data => ", data);
     setLoading(true);
-    const request = new Request("http://localhost:3000/api/auth/login", {
+    const request = new Request("/api/auth/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

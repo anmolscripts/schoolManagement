@@ -1,27 +1,30 @@
 'use client';
 import type { PropsWithChildren } from "react";
-import { usePathname } from 'next/navigation';
 import { Sidebar } from "@/components/Layouts/sidebar";
 import { Header } from "@/components/Layouts/header";
 
-export default function ConditionalLayout({ children }: PropsWithChildren) {
-    const pathname = usePathname();
-    const isAuthRoute = pathname.startsWith('/auth');
+type ConditionalLayoutProps = PropsWithChildren<{
+    session: any; 
+    school: any;
+}>;
 
-    if (isAuthRoute) {
+export default function ConditionalLayout({ children, session, school }: ConditionalLayoutProps) {
+
+    if (!session) {
         return <>{children}</>;
     }
 
     return (
-        <>
+        <div className="flex h-screen overflow-hidden">
             <Sidebar />
-            <div className="w-full bg-gray-2 dark:bg-[#020d1a] relative">
-                <Header />
-                <main className="isolate mx-auto w-full overflow-hidden px-5 m-5">
-                    
-                    {children}
+            <div className="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden">
+                <Header session={session} school={school} />
+                <main>
+                    <div className="mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10">
+                        {children}
+                    </div>
                 </main>
             </div>
-        </>
+        </div>
     );
 }

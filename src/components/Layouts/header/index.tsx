@@ -11,7 +11,7 @@ import { UserInfo } from "./user-info";
 import SchoolDetail from "./SchoolDetail";
 
 
-export function Header() {
+export function Header({ school }) {
   const { toggleSidebar, isMobile } = useSidebarContext();
 
   return (
@@ -37,8 +37,7 @@ export function Header() {
       )}
 
       <div className="max-xl:hidden">
-        <h1>Testing</h1>
-        <SchoolDetail />
+        <SchoolDetail name={school?.name} id={school?.school_id} />
       </div>
 
       <div className="flex flex-1 items-center justify-end gap-2 min-[375px]:gap-4">

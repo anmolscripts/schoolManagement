@@ -4,22 +4,24 @@ import type { NextRequest } from "next/server";
 
 export function middleware(req: NextRequest) {
   const token = req.cookies.get("token")?.value;
-  
-    // return NextResponse.redirect(new URL("/auth/sign-in", req.url));
   const { pathname } = req.nextUrl;
 
-  // Routes that do NOT require auth (whitelist)
+  // Allow all API routes to pass through, they will handle their own auth
+  if (pathname.startsWith("/api/")) {
+    return NextResponse.next();
+  }
+
+  // Routes that do NOT require auth (whitelist for pages)
   const publicPaths = [
     "/auth/sign-in",
     "/auth/sign-up",
-    "/api/auth/login",
     "/favicon.ico",
   ];
 
-  // If route starts with any of the public paths → allow
+  // If route is public, allow access
   const isPublic = publicPaths.some((path) => pathname.startsWith(path));
 
-  // If user not logged in and route is NOT public → redirect
+  // If user is not logged in and the route is not public, redirect to sign-in
   if (!token && !isPublic) {
     return NextResponse.redirect(new URL("/auth/sign-in", req.url));
   }
@@ -27,7 +29,7 @@ export function middleware(req: NextRequest) {
   return NextResponse.next();
 }
 
-// ✅ Apply middleware to all routes except Next.js internal files
+// Apply middleware to all routes except Next.js internal files
 export const config = {
   matcher: [
     "/((?!_next|images|static|favicon.ico).*)",

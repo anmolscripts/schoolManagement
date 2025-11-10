@@ -1,4 +1,4 @@
-import "dotenv/config"; // ✅ This loads .env automatically
+import 'dotenv/config';
 import { connectDB } from "../src/lib/db";
 import { seedInitialData } from "../src/lib/seed";
 
