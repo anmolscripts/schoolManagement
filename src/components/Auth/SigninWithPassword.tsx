@@ -10,6 +10,7 @@ export default function SigninWithPassword() {
   const [data, setData] = useState({
     userName: process.env.NEXT_PUBLIC_DEMO_USER_MAIL || "",
     password: process.env.NEXT_PUBLIC_DEMO_USER_PASS || "",
+    schoolCode: process.env.NEXT_PUBLIC_DEMO_SCHOOL_CODE || "",
     remember: false,
   });
 
@@ -22,11 +23,12 @@ export default function SigninWithPassword() {
     });
   };
 
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log("Data => ", data);
     setLoading(true);
-    const request = new Request("http://localhost:3000/api/login", {
+    const request = new Request("http://localhost:3000/api/auth/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -51,9 +53,9 @@ export default function SigninWithPassword() {
         label="School Code"
         className="mb-4 [&_input]:py-[15px]"
         placeholder="Enter your School Code"
-        name="userName"
+        name="schoolCode"
         handleChange={handleChange}
-        value={data.userName}
+        value={data.schoolCode}
         inputClass="bg-dark text-white"
         icon={<EmailIcon />}
       />

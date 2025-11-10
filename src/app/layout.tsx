@@ -10,6 +10,8 @@ import type { PropsWithChildren } from "react";
 import { Providers } from "./providers";
 import ConditionalLayout from "@/components/Layouts/ConditionalLayout";
 
+import { getSession } from "@/lib/auth";
+
 export const metadata: Metadata = {
   title: {
     template: "%s | NextAdmin - Next.js Dashboard Kit",
@@ -19,7 +21,9 @@ export const metadata: Metadata = {
     "Next.js admin dashboard toolkit with 200+ templates, UI components, and integrations for fast dashboard development.",
 };
 
-export default function RootLayout({ children }: PropsWithChildren) {
+export default async function RootLayout({ children }: PropsWithChildren) {
+  const session = await getSession();
+  console.log("Layout Session => ", session);
   return (
     <html lang="en" suppressHydrationWarning>
       <body>

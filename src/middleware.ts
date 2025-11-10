@@ -9,7 +9,7 @@ export function middleware(req: NextRequest) {
   const publicPaths = [
     "/auth/sign-in",
     "/auth/sign-up",
-    "/api/login",
+    "/api/auth/login",
     "/favicon.ico",
   ];
 
