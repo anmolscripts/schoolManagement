@@ -1,3 +1,6 @@
+export const fetchCache = "force-no-store";
+export const revalidate = 0;
+
 import "@/css/satoshi.css";
 import "@/css/style.css";
 
@@ -9,7 +12,6 @@ import NextTopLoader from "nextjs-toploader";
 import type { PropsWithChildren } from "react";
 import { Providers } from "./providers";
 import ConditionalLayout from "@/components/Layouts/ConditionalLayout";
-
 import { getSession } from "@/lib/auth";
 
 export const metadata: Metadata = {
@@ -23,7 +25,21 @@ export const metadata: Metadata = {
 
 export default async function RootLayout({ children }: PropsWithChildren) {
   const session = await getSession();
-  console.log("Layout Session => ", session);
+  console.log("Session => ", session);
+
+  if (session?.school_id) {
+    const response = await fetch(`http://localhost:3000/api/school`, {
+      method: "POST",
+      cache: "no-store",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ schoolCode: session.school_id }),
+    });
+
+    console.log("Response =>", await response.json());
+  }
+
   return (
     <html lang="en" suppressHydrationWarning>
       <body>

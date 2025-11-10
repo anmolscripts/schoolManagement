@@ -2,8 +2,8 @@ import jwt from "jsonwebtoken";
 import { cookies } from "next/headers";
 
 export async function getSession() {
-  const cookieStore = await cookies(); // ✅ cookies() is async in Next.js 15
-  const token = cookieStore.get("token")?.value;
+  const cookieStore = cookies();
+  const token = (await cookieStore).get("token")?.value;
 
   if (!token) return null;
 

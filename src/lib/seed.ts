@@ -3,6 +3,7 @@ import School from "@/models/School";
 import User from "@/models/User";
 import Student from "@/models/Student";
 import bcrypt from "bcryptjs";
+import { log } from "console";
 
 export async function seedInitialData() {
   const existing = await School.findOne();
@@ -13,6 +14,7 @@ export async function seedInitialData() {
     name: "Default School",
     address: "India",
     phone: "0000",
+    logo: "/logo.png",
     created_by: "system",
     updated_by: "system"
   });
