@@ -6,7 +6,8 @@ export interface IUser extends Document {
   name: string;
   username: string;
   password: string;
-  role: "admin" | "teacher" | "staff";
+  role: "admin" | "teacher" | "staff" | "student";
+  prifile: string;
   created_at: Date;
   updated_at: Date;
   created_by?: string;
@@ -18,7 +19,9 @@ const userSchema = new Schema<IUser>({
   name: String,
   username: { type: String, unique: true },
   password: String,
-  role: { type: String, enum: ["admin", "teacher", "staff"] }
+  prifile: String,
+  role: { type: String, enum: ["admin", "teacher", "staff", "student"] },
+  
 });
 
 auditFields(userSchema);

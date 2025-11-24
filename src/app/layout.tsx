@@ -17,11 +17,15 @@ export default async function RootLayout({
   if (session) {
     await connectDB();
     // @ts-ignore
-    school = await School.findOne({ school_id: session.school_id }).lean();
+    school = JSON.parse(
+      JSON.stringify(
+        await School.findOne({ school_id: session.school_id }).lean(),
+      ),
+    );
   }
 
   return (
-    <html lang="en">
+    <html lang="en" className="light" suppressHydrationWarning>
       <body suppressHydrationWarning={true}>
         <Providers>
           <div className="dark:bg-boxdark-2 dark:text-bodydark">

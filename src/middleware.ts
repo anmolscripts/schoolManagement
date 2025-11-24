@@ -20,7 +20,6 @@ export function middleware(req: NextRequest) {
 
   // If route is public, allow access
   const isPublic = publicPaths.some((path) => pathname.startsWith(path));
-
   // If user is not logged in and the route is not public, redirect to sign-in
   if (!token && !isPublic) {
     return NextResponse.redirect(new URL("/auth/sign-in", req.url));

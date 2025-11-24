@@ -12,14 +12,18 @@ import Link from "next/link";
 import { useState } from "react";
 import { LogOutIcon, SettingsIcon, UserIcon } from "./icons";
 import { redirect } from "next/navigation";
+import { UserType } from "@/types/User";
 
-export function UserInfo() {
+
+
+
+export function UserInfo({ user }: { user: UserType | null }) {
   const [isOpen, setIsOpen] = useState(false);
 
   const USER = {
-    name: "John Smith",
-    email: "johnson@nextadmin.com",
-    img: "/images/user/user-03.png",
+    name: user?.name || "Testing",
+    email: user?.username || "User Name",
+    img: user?.profile || "/default-profile.png",
   };
 const handelLogoutClick = async () => {
   setIsOpen(false);

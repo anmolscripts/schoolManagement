@@ -31,11 +31,11 @@ const ImagePicker = () => {
   };
 
   return (
-    <div className="p-2">
-      <div className="flex flex-col rounded-xl border border-slate-200 bg-white shadow-3 dark:bg-dark dark:border-slate-800">
+    <div className="p-2 h-full">
+      <div className="flex flex-col rounded-xl border border-slate-200 bg-white shadow-3 dark:bg-dark dark:border-slate-800 h-full">
         <div className="flex items-center justify-center overflow-hidden rounded-xl shadow-2">
           <Image
-            className="h-full w-full object-cover"
+            className="h-full w-auto object-cover"
             src={previewImage}
             alt="selected-image"
             width={2800}

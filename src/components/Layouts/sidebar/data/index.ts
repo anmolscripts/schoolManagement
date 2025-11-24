@@ -8,9 +8,7 @@ export const NAV_DATA = [
         title: "Dashboard",
         icon: Icons.HomeIcon,
         url: "/dashboard",
-        items: [
-          
-        ],
+        items: [],
       },
       {
         title: "Students",
@@ -19,10 +17,38 @@ export const NAV_DATA = [
         items: [],
       },
       {
-        title: "Teachers",
+        title: "Staffs",
         url: "/dashboard/teachers",
         icon: Icons.User,
-        items: [],
+        items: [
+          {
+            title: "Staffs List",
+            url: "/forms/form-elements",
+          },
+          {
+            title: "Add New Staff",
+            url: "/forms/form-elements",
+          },
+          {
+            title: "Depertments",
+            url: "/forms/form-layout",
+          },
+        ],
+      },
+      {
+        title: "Users",
+        
+        icon: Icons.User,
+        items: [
+          {
+            title: "All Users",
+            url: "/dashboard/users",
+          },
+          {
+            title: "Rolls",
+            url: "/dashboard/users/roles",
+          }
+        ],  
       },
       {
         title: "Classes",
