@@ -1,3 +1,4 @@
+'use client';
 import { CheckIcon, XIcon } from "@/assets/icons";
 import { cn } from "@/lib/utils";
 import { useId } from "react";
@@ -7,6 +8,9 @@ type PropsType = {
   background?: "dark" | "light";
   backgroundSize?: "sm" | "default";
   name?: string;
+  checked?: boolean;
+  disabled?: boolean;
+  onChange?: (checked: boolean) => void;
 };
 
 export function Switch({
@@ -14,16 +18,32 @@ export function Switch({
   withIcon,
   backgroundSize,
   name,
+  checked = false,
+  disabled = false,
+  onChange,
 }: PropsType) {
   const id = useId();
 
   return (
     <label
       htmlFor={id}
-      className="flex max-w-fit cursor-pointer select-none items-center"
+      className={cn(
+        "flex max-w-fit cursor-pointer select-none items-center",
+        disabled && "cursor-not-allowed opacity-50"
+      )}
     >
       <div className="relative">
-        <input type="checkbox" name={name} id={id} className="peer sr-only" />
+        <input
+          type="checkbox"
+          name={name}
+          id={id}
+          className="peer sr-only"
+          checked={checked}
+          disabled={disabled}
+          onChange={(e) => onChange?.(e.target.checked)}
+        />
+
+        {/* Background */}
         <div
           className={cn("h-8 w-14 rounded-full bg-gray-3 dark:bg-[#5A616B]", {
             "h-5": backgroundSize === "sm",
@@ -31,14 +51,17 @@ export function Switch({
           })}
         />
 
+        {/* Slider */}
         <div
           className={cn(
-            "absolute left-1 top-1 flex size-6 items-center justify-center rounded-full bg-white shadow-switch-1 transition peer-checked:right-1 peer-checked:translate-x-full peer-checked:[&_.check-icon]:block peer-checked:[&_.x-icon]:hidden",
+            "absolute left-1 top-1 flex size-6 items-center justify-center rounded-full bg-white shadow-switch-1 transition",
+            "peer-checked:right-1 peer-checked:translate-x-full",
+            "peer-checked:[&_.check-icon]:block peer-checked:[&_.x-icon]:hidden",
             {
               "-top-1 left-0 size-7 shadow-switch-2": backgroundSize === "sm",
               "peer-checked:bg-primary peer-checked:dark:bg-white":
                 background !== "dark",
-            },
+            }
           )}
         >
           {withIcon && (
