@@ -18,21 +18,10 @@ export const NAV_DATA = [
       },
       {
         title: "Staffs",
-        url: "/dashboard/teachers",
+        url: "/dashboard/staffs",
         icon: Icons.User,
         items: [
-          {
-            title: "Staffs List",
-            url: "/forms/form-elements",
-          },
-          {
-            title: "Add New Staff",
-            url: "/forms/form-elements",
-          },
-          {
-            title: "Depertments",
-            url: "/forms/form-layout",
-          },
+          
         ],
       },
       {

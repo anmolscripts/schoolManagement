@@ -5,6 +5,7 @@ export interface IRole extends Document {
   role_id: string;
   school_id: string;
   role_name: string;
+  role_type?:string;
   remark?: string;
   access: Record<string, { view: boolean; update: boolean; edit: boolean }>;
   created_at: Date;
@@ -17,6 +18,7 @@ const roleSchema = new Schema<IRole>({
   role_id: { type: String, unique: true },
   school_id: { type: String, required: true },
   role_name: { type: String, required: true, unique: true },
+  role_type: { type: String, required: true },
   remark: { type: String },
   access: { type: Object, default: {} },
 });

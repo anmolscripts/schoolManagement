@@ -7,14 +7,21 @@ export async function POST(req: Request) {
   await connectDB();
   const data = await req.json();
 
-  const { role_id, school_id, role_name, remark, access } = data;
+  const { role_id, school_id, role_name, remark, access, role_type } = data;
 
   if (!school_id || !role_name) {
     return NextResponse.json(
       { error: "school_id and role_name are required" },
-      { status: 400 }
+      { status: 400 },
     );
   }
+
+  const normalizedAccess = Object.fromEntries(
+  access.map((a) => [
+    a.sideMenu_id,
+    { view: a.view, update: a.update, edit: a.edit }
+  ])
+);
 
   // ========== UPDATE ROLE ==========
   if (role_id) {
@@ -22,24 +29,22 @@ export async function POST(req: Request) {
       { role_id },
       {
         role_name,
+        role_type, // <-- FIX 🚀
         remark,
-        access,
+        access: normalizedAccess,
         updated_by: "system",
         updated_at: new Date(),
       },
-      { new: true }
+      { new: true },
     );
 
     if (!updated) {
-      return NextResponse.json(
-        { error: "Role not found" },
-        { status: 404 }
-      );
+      return NextResponse.json({ error: "Role not found" }, { status: 404 });
     }
 
     return NextResponse.json(
       { message: "Role updated successfully", role: updated },
-      { status: 200 }
+      { status: 200 },
     );
   }
 
@@ -49,9 +54,11 @@ export async function POST(req: Request) {
   if (existingName) {
     return NextResponse.json(
       { error: "Role name already exists" },
-      { status: 400 }
+      { status: 400 },
     );
   }
+
+ 
 
   const newRoleId = await generateRoleId(school_id);
 
@@ -59,14 +66,15 @@ export async function POST(req: Request) {
     role_id: newRoleId,
     school_id,
     role_name,
+    role_type,
     remark,
-    access,
+    access: normalizedAccess,
     created_by: "system",
     updated_by: "system",
   });
 
   return NextResponse.json(
     { message: "Role created successfully", role },
-    { status: 201 }
+    { status: 201 },
   );
 }

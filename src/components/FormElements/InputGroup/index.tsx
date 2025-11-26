@@ -10,7 +10,7 @@ type InputGroupProps = {
   required?: boolean;
   disabled?: boolean;
   active?: boolean;
-  handleChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   value?: string;
   name?: string;
   icon?: React.ReactNode;
@@ -28,7 +28,7 @@ const InputGroup: React.FC<InputGroupProps> = ({
   required,
   disabled,
   active,
-  handleChange,
+  onChange,
   icon,
   inputClass,
   ...props
@@ -58,14 +58,16 @@ const InputGroup: React.FC<InputGroupProps> = ({
           type={type}
           name={props.name}
           placeholder={placeholder}
-          onChange={handleChange}
+          onChange={(e) => {
+            if (onChange) onChange(e); // safe call
+          }}
           value={props.value}
           defaultValue={props.defaultValue}
           className={cn(
-            `w-full rounded-lg border-[1.5px]  ${inputClass}`,
+            `w-full rounded-lg border-[1.5px] ${inputClass}`,
             type === "file"
               ? getFileStyles(props.fileStyleVariant!)
-              : "px-5.5 py-3  placeholder:text-dark-6 dark:text-white",
+              : "px-5.5 py-3 placeholder:text-dark-6 dark:text-white",
             props.iconPosition === "left" && "pl-12.5",
             props.height === "sm" && "py-2.5",
           )}

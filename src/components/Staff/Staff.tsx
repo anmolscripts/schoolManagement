@@ -9,16 +9,16 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "../../ui/table";
-import AddRole from "./AddRole";
+} from "../ui/table";
 import { RoleType } from "@/types/role";
+import AddStaffForm from "./AddStaffForm";
 
 type RolesProps = {
   sideMenus: SideMenuType[] | null;
   roles: RoleType[] | null;
 };
 
-const Roles = ({ sideMenus, roles }: RolesProps) => {
+const Staff = ({ sideMenus, roles }: RolesProps) => {
   const [isAdding, setIsAdding] = useState(false);
 
   return (
@@ -26,7 +26,7 @@ const Roles = ({ sideMenus, roles }: RolesProps) => {
       {/* Header */}
       <div className="flex justify-between py-4 sm:px-7 sm:py-5 xl:px-8.5">
         <h2 className="text-2xl font-bold text-dark dark:text-white">
-          {isAdding ? "Add Roles" : "Roles List"}
+          {isAdding ? "Add Staff" : "Staffs List"}
         </h2>
 
         <button
@@ -35,13 +35,13 @@ const Roles = ({ sideMenus, roles }: RolesProps) => {
             isAdding ? "bg-red-600" : "bg-dark"
           }`}
         >
-          {isAdding ? "Cancel" : "Add Role"}
+          {isAdding ? "Cancel" : "Add Staff"}
         </button>
       </div>
 
       {/* Add Role Form */}
       {isAdding ? (
-        <AddRole sideMenus={sideMenus} />
+         <AddStaffForm /> 
       ) : (
         <Table>
           <TableHeader>
@@ -98,4 +98,4 @@ const Roles = ({ sideMenus, roles }: RolesProps) => {
   );
 };
 
-export default Roles;
+export default Staff;

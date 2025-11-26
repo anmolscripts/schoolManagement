@@ -6,6 +6,7 @@ import { SideMenuType } from "@/types/SideMenues";
 import Roles from "@/components/Users/Roles/Roles";
 import SideMenu from "@/models/SideMenu";
 import Role from "@/models/Role";
+import Staff from "@/components/Staff/Staff";
 
 const page = async () => {
   const session = await getSession();
@@ -38,7 +39,7 @@ const page = async () => {
   }));
 
 
-    return <Roles sideMenus = {sideMenus}  roles = {roles} />;
+    return <Staff sideMenus = {sideMenus}  roles = {roles} />;
   } else {
     return <div>Please sign in to view this page.</div>;
   }
